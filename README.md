@@ -4,8 +4,15 @@ Helper for using with tetrapol-kit
 
 ## Usage
 
+### Demodolation & Decoding
+
 ```console
 python tetrapol-helper.py --file tetrapol_french_channels.txt -m "-a rtl=0 -p 7 -g 42 -s 2000000" --tower "340-0-6"
+```
+
+#### Extraction analyzer
+```console
+python tetrapol-extract-onlynew.py -f tetrapol_french_channels.txt -t extraction_td_analyze.txt -d "2023-05-21"
 ```
 
 ## Sample output helper commands
