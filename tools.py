@@ -9,6 +9,7 @@
 # 23/04/2023 - 0.7 - Ajout d'un paramètre obligatoire : numéro de CCH
 # 22/05/2023 - 0.8 - Ajout des options de la ligne de commande
 # 22/05/2023 - 0.9 - Généralisation du versionning
+# 22/05/2023 - 0.10 - Ajout du nom de l'utilisateur dans le module tetrapol-helper
 
 import sys
 

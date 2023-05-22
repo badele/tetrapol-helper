@@ -7,7 +7,7 @@ Helper for using with tetrapol-kit
 ### Demodolation & Decoding
 
 ```console
-python tetrapol-helper.py --file tetrapol_french_channels.txt -m "-a rtl=0 -p 7 -g 42 -s 2000000" --tower "340-0-6"
+python tetrapol-helper.py --file tetrapol_french_channels.txt -m "-a rtl=0 -p 7 -g 42 -s 2000000" --cellid "340-0-6" --username badele
 ```
 
 #### Extraction analyzer
@@ -40,11 +40,11 @@ python3 demod_syracuse.py -a rtl=0 -p 7 -g 42 -s 2000000 -c 2352,2328,2288
 
 # == Decoding / Dump ==
 # On terminal 1
-tetrapol_dump -d DOWN -t CCH -i /tmp/tetrapol-helper/channel2352.bits 2>&1 >/dev/null | python3 tda_analyse_cellule.py 2352
+tetrapol_dump -d DOWN -t CCH -i /tmp/tetrapol-helper/channel2352.bits 2>&1 >/dev/null | python3 tda_analyse_cellule.py
 
 # On terminal 2
-tetrapol_dump -d DOWN -t TCH -i /tmp/tetrapol-helper/channel2328.bits 2>&1 >/dev/null | python3 tda_analyse_cellule.py 2328
+tetrapol_dump -d DOWN -t TCH -i /tmp/tetrapol-helper/channel2328.bits 2>&1 >/dev/null | python3 tda_analyse_cellule.py
 
 # On terminal 2
-tetrapol_dump -d DOWN -t TCH -i /tmp/tetrapol-helper/channel2288.bits 2>&1 >/dev/null | python3 tda_analyse_cellule.py 2288
+tetrapol_dump -d DOWN -t TCH -i /tmp/tetrapol-helper/channel2288.bits 2>&1 >/dev/null | python3 tda_analyse_cellule.py
 ```

@@ -32,8 +32,7 @@ class timedeltaplus24h(datetime.timedelta):
 
 def get_options():
     parser = ArgumentParser()
-    parser.add_argument("-c", "--cch", type=str, default="", help="Channel", required=True)
-    parser.add_argument("-u", "--username", type=str, default="", help="Username", required=False)
+    parser.add_argument("-u", "--username", type=str, default="", help="Username made scan", required=False)
     parser.add_argument('-v', '--version', action='version', version=f'{tools.__name__} {tools.__version__} - %(prog)s - {APPLICATION_NOM}')
 
     try:
@@ -101,7 +100,7 @@ def analyse_bloc(bloc):
 				d_system_info = True
 				
 				# Affichage des informations
-				log_cellule = "Cellule %s du département %s utilisant le CCH %s :" % (cell_id.group(1), dep.group(1).zfill(2), options.cch)
+				log_cellule = "Cellule %s du département %s :" % (cell_id.group(1), dep.group(1).zfill(2))
 				print(log_cellule)
 				print(pays)
 				print(reseau)
@@ -174,13 +173,8 @@ def analyse_bloc(bloc):
 # Show help if no arguments
 options = get_options()
 
-# Récupère les options de la ligne de commande
-if not options.cch.isdigit():
-	print("Le numéro de canal CCH doit être un nombre !")
-	sys.exit()
-
 # Ouverture du fichier de log
-fichier_log = "TETRAPOL-CCH-" + options.cch + "-" + time.strftime("%Y%m%d-%H%M%S", time.localtime(time.time())) + ".txt"
+fichier_log = "TETRAPOL-TDA-" + time.strftime("%Y%m%d-%H%M%S", time.localtime(time.time())) + ".txt"
 log = open(fichier_log, "a")
 
 debut = time.time()
