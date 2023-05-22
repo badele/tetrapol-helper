@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 
-# 2023-05-21 - 0.0.1 - First release
-
 import tools
 
 import re
 
 from argparse import ArgumentParser
 
+APPLICATION_NOM = "extract only cellId changes"
 
 def get_options():
     parser = ArgumentParser()
     parser.add_argument("-d", "--date", type=str, default="", help="Imported date", required=True)
     parser.add_argument("-f", "--file", type=str, default="", help="tetra file channel informations", required=True)
     parser.add_argument("-t", "--tdafile", type=str, default="", help="TETRAPOL Dump Analyzer", required=True)
+    parser.add_argument('-v', '--version', action='version', version=f'{tools.__name__} {tools.__version__} - %(prog)s - {APPLICATION_NOM}')
 
-    options = parser.parse_args()
+    try:
+        options = parser.parse_args()
+    except:
+        parser.print_help()
+        sys.exit(0)
 
     return options
 

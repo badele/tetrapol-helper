@@ -1,17 +1,10 @@
 # Source: from tetrahub site(mrousse83)
 
 # TETRAPOL Dump - Analyse Cellule
-# 18/04/2023 - 0.1 - Traitement du D_SYSTEM_INFO
-# 19/04/2023 - 0.2 - Traitement du D_NEIGHBOURING_CELL
-# 19/04/2023 - 0.3 - Traitement du D_GROUP_ACTIVATION
-# 20/04/2023 - 0.4 - Correction d'un bug d'affichage
-# 20/04/2023 - 0.5 - Ajout du calcul de la durée de l'analyse
-# 20/04/2023 - 0.6 - Correction d'un bug d'affichage avec les départements dont le numéro est sur un seul chiffre
-# 23/04/2023 - 0.7 - Ajout d'un paramètre obligatoire : numéro de CCH
-# 22/05/2023 - 0.8 - Ajout des options de la ligne de commande
 
 APPLICATION_NOM = "TETRAPOL Dump Analyzer - Analyse Cellule"
-APPLICATION_VERSION = "0.8"
+
+import tools
 
 import datetime
 import re
@@ -41,8 +34,13 @@ def get_options():
     parser = ArgumentParser()
     parser.add_argument("-c", "--cch", type=str, default="", help="Channel", required=True)
     parser.add_argument("-u", "--username", type=str, default="", help="Username", required=False)
+    parser.add_argument('-v', '--version', action='version', version=f'{tools.__name__} {tools.__version__} - %(prog)s - {APPLICATION_NOM}')
 
-    options = parser.parse_args()
+    try:
+        options = parser.parse_args()
+    except:
+        parser.print_help()
+        sys.exit(0)
 
     return options
 
@@ -173,12 +171,10 @@ def analyse_bloc(bloc):
 						tda_tkg.update({group_id.group(1) : horaire})
 						print("%s - TKG %s" % (horaire, group_id.group(1)))
 
-# Affichage du nom de l'application et de sa version
-print(APPLICATION_NOM + " v" + APPLICATION_VERSION)
-
-# Récupère les options de la ligne de commande
+# Show help if no arguments
 options = get_options()
 
+# Récupère les options de la ligne de commande
 if not options.cch.isdigit():
 	print("Le numéro de canal CCH doit être un nombre !")
 	sys.exit()

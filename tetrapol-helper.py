@@ -10,6 +10,8 @@ import re
 import sys
 import argparse 
 
+APPLICATION_NOM = "tetrapol helper"
+
 
 def get_options():
     parser = argparse.ArgumentParser()
@@ -19,8 +21,13 @@ def get_options():
     parser.add_argument("-s", "--saveto", type=str, default="/tmp/tetrapol-helper", help="Save result to", required=False)
     parser.add_argument("-e", "--exclude", type=str, default="", help="Exclude channels", required=False)
     parser.add_argument("-w","--write", action=argparse.BooleanOptionalAction)
+    parser.add_argument('-v', '--version', action='version', version=f'{tools.__name__} {tools.__version__} - %(prog)s - {APPLICATION_NOM}')
 
-    options = parser.parse_args()
+    try:
+        options = parser.parse_args()
+    except:
+        parser.print_help()
+        sys.exit(0)
 
     return options
 

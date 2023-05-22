@@ -1,10 +1,23 @@
 #!/usr/bin/env python3
 
+# 18/04/2023 - 0.1 - Traitement du D_SYSTEM_INFO
+# 19/04/2023 - 0.2 - Traitement du D_NEIGHBOURING_CELL
+# 19/04/2023 - 0.3 - Traitement du D_GROUP_ACTIVATION
+# 20/04/2023 - 0.4 - Correction d'un bug d'affichage
+# 20/04/2023 - 0.5 - Ajout du calcul de la durée de l'analyse
+# 20/04/2023 - 0.6 - Correction d'un bug d'affichage avec les départements dont le numéro est sur un seul chiffre
+# 23/04/2023 - 0.7 - Ajout d'un paramètre obligatoire : numéro de CCH
+# 22/05/2023 - 0.8 - Ajout des options de la ligne de commande
+# 22/05/2023 - 0.9 - Généralisation du versionning
+
 import sys
 
 import os
 import re
 import datetime
+
+__name__="TETRAPOL Helper"
+__version__="0.9"
 
 def sortByCellId(line):
     match = re.match('^([0-9]+)\-([0-9]+)\-([0-9]+)',line.strip())
