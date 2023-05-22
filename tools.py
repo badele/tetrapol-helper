@@ -6,7 +6,7 @@ import os
 import re
 import datetime
 
-def sortByTowerid(line):
+def sortByCellId(line):
     match = re.match('^([0-9]+)\-([0-9]+)\-([0-9]+)',line.strip())
     if match:
         return f'{match[1].zfill(6)}{match[2].zfill(6)}{match[3].zfill(6)}'
@@ -19,7 +19,7 @@ class Channels:
         self.__channels = {}
         self.__new = {}
         self.__update = {}
-        self.__wtowerid=10
+        self.__wcellid=10
 
 
     def insert(self, cellid, value):
@@ -69,8 +69,11 @@ class Channels:
         self.__channels[cellid][field] = value
 
 
-    def getCellInfos(self, towerid):
-        return self.__channels[towerid]
+    def getCellInfos(self, cellid):
+        if cellid not in self.__channels:
+            return ""
+
+        return self.__channels[cellid]
 
 
     def exportHistories(self, date, filename):
@@ -82,7 +85,7 @@ class Channels:
                 cch = self.__new[cellid]['CCH']
                 tch = self.__new[cellid]['TCH']
 
-                output = f"{date} -    New Cell {cellid.rjust(self.__wtowerid)}"
+                output = f"{date} -    New Cell {cellid.rjust(self.__wcellid)}"
                 if cch:
                     output +=f" CCH: {cch}" 
 
@@ -93,7 +96,7 @@ class Channels:
 
             # Show New
             for cellid in self.__update:
-                output = f"{date} - Update Cell {cellid.rjust(self.__wtowerid)}"
+                output = f"{date} - Update Cell {cellid.rjust(self.__wcellid)}"
                 if 'CCH' in self.__update[cellid]: 
                     output += f" CCH: {self.__update[cellid]['CCH']['old']} => {self.__update[cellid]['CCH']['new']}"
                 if 'TCH' in self.__update[cellid]: 
@@ -134,21 +137,21 @@ class Channels:
         columnspace=10
         dataspace=4
 
-        title = f"{'Relais'.rjust(self.__wtowerid)}{' '*columnspace}CCH {' '*columnspace}TCH "
+        title = f"{'Relais'.rjust(self.__wcellid)}{' '*columnspace}CCH {' '*columnspace}TCH "
 
         lines = []
-        for towerid in self.__channels:
-            cch = str(self.__channels[towerid]['CCH'])
+        for cellid in self.__channels:
+            cch = str(self.__channels[cellid]['CCH'])
             # if cch == "":
             #     cch = " "*4
-            line = f"{towerid.rjust(self.__wtowerid)}{' '*columnspace}{cch}{' '*columnspace}"
+            line = f"{cellid.rjust(self.__wcellid)}{' '*columnspace}{cch}{' '*columnspace}"
 
-            self.__channels[towerid]['TCH'].sort()
-            for tch in self.__channels[towerid]['TCH']:
+            self.__channels[cellid]['TCH'].sort()
+            for tch in self.__channels[cellid]['TCH']:
                 line += f"{tch}{' '*dataspace}"
             lines.append(line)
 
-        lines.sort(key=sortByTowerid)
+        lines.sort(key=sortByCellId)
 
         with open(filename,"w") as f:
             f.write(f"{title}\n")
