@@ -10,6 +10,7 @@
 # 22/05/2023 - 0.8 - Ajout des options de la ligne de commande
 # 22/05/2023 - 0.9 - Généralisation du versionning
 # 22/05/2023 - 0.10 - Ajout du nom de l'utilisateur dans le module tetrapol-helper
+# 22/05/2023 - 0.11 - Ajout de tetrapol-converter.py
 
 import sys
 
@@ -20,12 +21,52 @@ import datetime
 __name__="TETRAPOL Helper"
 __version__="0.9"
 
+freqUnit = {
+'G': 1000000000,
+'M': 1000000,
+"K": 1000,
+}
+
 def sortByCellId(line):
     match = re.match('^([0-9]+)\-([0-9]+)\-([0-9]+)',line.strip())
     if match:
         return f'{match[1].zfill(6)}{match[2].zfill(6)}{match[3].zfill(6)}'
     
     return ""
+
+def freqToHz(freqstr):
+    match = re.match("([0-9]+\.?[0-9]+)([Gg|Mm|Kk]?)",freqstr)
+    if match:
+        if not match[2]:
+            return float(freqstr)
+
+        multiplier = freqUnit[match[2].upper()]
+        return float(match[1])*multiplier
+
+
+def freqToStr(freqhz):
+    unit=""
+
+    if freqhz>=1000000000:
+        freqhz /= 1000000000
+        unit ="G"
+    elif freqhz>=1000000:
+        freqhz /= 1000000
+        unit ="M"
+    elif freqhz>=1000:
+        freqhz /= 1000
+        unit ="K"
+
+    unit += "Hz"
+    return f"{freqhz} {unit}"
+
+
+def convertFreqToChannel(freqhz):
+     return int((freqhz - 368645000) / 10000)
+
+
+def convertChannelToFreq(channel):
+    return 10000*channel+368645000
 
 
 class Channels:
