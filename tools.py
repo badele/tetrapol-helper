@@ -34,7 +34,7 @@ class Channels:
         if cellid not in self.__channels: 
             new = True
             self.__channels[cellid] = {
-                "CCH": "",
+                "CCH": "xxxx",
                 "TCH": []
             }
 
@@ -117,7 +117,7 @@ class Channels:
                     # Cell infos
                     lineinfos = line.split(" ")
                     cellinfo = {
-                        "CCH": "",
+                        "CCH": "xxxx",
                         "TCH": []
                     }
                     if len(lineinfos)>=2:
@@ -139,8 +139,8 @@ class Channels:
         lines = []
         for towerid in self.__channels:
             cch = str(self.__channels[towerid]['CCH'])
-            if cch == "":
-                cch = " "*4
+            # if cch == "":
+            #     cch = " "*4
             line = f"{towerid.rjust(self.__wtowerid)}{' '*columnspace}{cch}{' '*columnspace}"
 
             self.__channels[towerid]['TCH'].sort()
