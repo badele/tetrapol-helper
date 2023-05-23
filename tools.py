@@ -11,6 +11,7 @@
 # 22/05/2023 - 0.9 - Généralisation du versionning
 # 22/05/2023 - 0.10 - Ajout du nom de l'utilisateur dans le module tetrapol-helper
 # 22/05/2023 - 0.11 - Ajout de tetrapol-converter.py
+# 23/05/2023 - 0.12 - Add demod_syracuse.py and check_insgtall script
 
 import sys
 
@@ -19,7 +20,7 @@ import re
 import datetime
 
 __name__="TETRAPOL Helper"
-__version__="0.9"
+__version__="0.12"
 
 freqUnit = {
 'G': 1000000000,

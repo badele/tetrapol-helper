@@ -1,0 +1,7 @@
+
+channel*.bits
+channel*.stdout
+channel*.stderr
+
+# Python
+__pycache__
